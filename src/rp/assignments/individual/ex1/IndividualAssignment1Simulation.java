@@ -34,7 +34,7 @@ public class IndividualAssignment1Simulation {
 		// Note that it is also possible to create a configuration to describe a
 		// real robot and use that with the same control code on real hardware.
 		boolean withTouchSensor = true;
-		boolean withRangeSensor = true;
+		boolean withRangeSensor = true;	
 		WheeledRobotConfiguration robotConfig = SimulatedRobots
 				.makeWheeledConfiguration(sim.getSimulationCore(),
 						withTouchSensor, withRangeSensor);
@@ -58,7 +58,7 @@ public class IndividualAssignment1Simulation {
 		// to the touch sensor on the simulated robot
 		// Note that this will only compile if you controller implements
 		// TouchSensorListener (see RandomWalkController for an example)
-		sim.addTouchSensorListener(wrapper, controller);
+		//sim.addTouchSensorListener(wrapper, controller);
 
 		// This gets the sensor used for range measurement on the simulated
 		// robot. This object implements the RangeFinder method which is also

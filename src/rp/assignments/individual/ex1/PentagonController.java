@@ -4,7 +4,6 @@ import lejos.robotics.RangeFinder;
 import lejos.robotics.navigation.DifferentialPilot;
 import rp.robotics.DifferentialDriveRobot;
 import rp.robotics.MobileRobot;
-import rp.robotics.TouchSensorEvent;
 import rp.systems.StoppableRunnable;
 import rp.util.Rate;
 
@@ -32,7 +31,7 @@ public class PentagonController implements StoppableRunnable {
 	public PentagonController(DifferentialDriveRobot _robot, float _sideLength) {
 		m_robot = _robot;
 		m_pilot = m_robot.getDifferentialPilot();
-		m_sideLength = _sideLength;
+		m_sideLength = _sideLength;	
 	}
 
 	@Override
@@ -44,8 +43,8 @@ public class PentagonController implements StoppableRunnable {
 		
 		Rate r;
 		while(m_running) {
-			float move = 0.8f;
-			float turn = 108f;
+			float move = m_sideLength;
+			float turn = 72f;
 			m_pilot.travel(move , true);
 			r = new Rate(40);
 			while (m_pilot.isMoving() && !m_bumped) {
@@ -70,11 +69,6 @@ public class PentagonController implements StoppableRunnable {
 	@Override
 	public void stop() {
 		m_running = false;
-	}
-	
-	@Override
-	public void sensorPressed(TouchSensorEvent _e) {
-		m_bumped = true;
 	}
 	
 	public void setRangeScanner(RangeFinder _ranger) {
