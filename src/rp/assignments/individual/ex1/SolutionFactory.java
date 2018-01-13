@@ -34,17 +34,17 @@ public class SolutionFactory {
 
 	public static StoppableRunnable createOctagonController(
 			DifferentialDriveRobot _robot, Float _sideLength) {
-		return null;
+		return null ; // new OctagonController(_robot, _sideLength);
 	}
 
 	public static StoppableRunnable createNonagonController(
 			DifferentialDriveRobot _robot, Float _sideLength) {
-		return null;
+		return null; // new NonagonController(_robot, _sideLength);
 	}
 
 	public static ControllerWithTouchSensor createBumperController(
 			DifferentialDriveRobot _robot) {
-		return null;
+		return null ;//new BumperCar(_robot);
 	}
 
 	public static EventBasedTouchSensor createVirtualBumper(

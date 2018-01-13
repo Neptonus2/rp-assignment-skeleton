@@ -1,8 +1,12 @@
 package rp.assignments.individual.ex1;
 
+import lejos.robotics.RangeFinder;
+import lejos.robotics.navigation.DifferentialPilot;
 import rp.robotics.DifferentialDriveRobot;
 import rp.robotics.MobileRobot;
+import rp.robotics.TouchSensorEvent;
 import rp.systems.StoppableRunnable;
+import rp.util.Rate;
 
 /**
  * 
@@ -18,18 +22,64 @@ import rp.systems.StoppableRunnable;
  */
 public class PentagonController implements StoppableRunnable {
 
-	public PentagonController(DifferentialDriveRobot robot, float sideLength) {
-		// TODO Auto-generated method stub
+	private final DifferentialDriveRobot m_robot;
+	private boolean m_running = false;
+	private final DifferentialPilot m_pilot;
+	private boolean m_bumped = false;
+	private RangeFinder m_ranger;
+	private final float m_sideLength;
+	
+	public PentagonController(DifferentialDriveRobot _robot, float _sideLength) {
+		m_robot = _robot;
+		m_pilot = m_robot.getDifferentialPilot();
+		m_sideLength = _sideLength;
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		m_running = true;
+		
+		m_pilot.setTravelSpeed(0.20f);
+		m_pilot.setRotateSpeed(30);
+		
+		Rate r;
+		while(m_running) {
+			float move = 0.8f;
+			float turn = 108f;
+			m_pilot.travel(move , true);
+			r = new Rate(40);
+			while (m_pilot.isMoving() && !m_bumped) {
+				if (m_ranger != null) {
+					if (m_ranger.getRange() < m_robot.getRobotLength()) {
+						System.out.println("Watch out for that wall!");
+					}
+				}
+				r.sleep();
+			}
+
+			if (m_bumped) {
+				m_pilot.stop();
+				m_pilot.travel(-move / 2);
+
+				m_bumped = false;
+			}
+			m_pilot.rotate(turn);
+		}
 	}
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
+		m_running = false;
 	}
+	
+	@Override
+	public void sensorPressed(TouchSensorEvent _e) {
+		m_bumped = true;
+	}
+	
+	public void setRangeScanner(RangeFinder _ranger) {
+		m_ranger = _ranger;
+	}
+
 
 }

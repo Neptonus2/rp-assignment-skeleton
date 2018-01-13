@@ -54,11 +54,11 @@ public class IndividualAssignment1Simulation {
 		PentagonController controller = new PentagonController(
 				wrapper.getRobot(), 0.5f);
 
-		// This call attaches theevent listener implemented by the controller
+		// This call attaches the event listener implemented by the controller
 		// to the touch sensor on the simulated robot
 		// Note that this will only compile if you controller implements
 		// TouchSensorListener (see RandomWalkController for an example)
-		// sim.addTouchSensorListener(wrapper, controller);
+		sim.addTouchSensorListener(wrapper, controller);
 
 		// This gets the sensor used for range measurement on the simulated
 		// robot. This object implements the RangeFinder method which is also
@@ -69,7 +69,7 @@ public class IndividualAssignment1Simulation {
 		// distance to walls.
 		// Note that this will only compile if your controller provides this
 		// method (see RandomWalkController for an example)
-		// controller.setRangeScanner(ranger);
+		controller.setRangeScanner(ranger);
 
 		// We can now create a JComponent that renders the map, robots etc. for
 		// visualisation.
